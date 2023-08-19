@@ -17,8 +17,8 @@ class StringServiceTest extends TestCase
     public function testEncodeString()
     {
         $stringService = StringService::getInstance();
-        $input = "  Ma  -chaine##!   PÀS ENcodé";
-        $expectedOutput = "ma--chaine-pas-encode";
+        $input = "  Ma  -chaine##!   PÀS ENcodé     ";
+        $expectedOutput = "ma-chaine-pas-encode";
 
         $output = $stringService->encodeString($input);
 

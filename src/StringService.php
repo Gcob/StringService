@@ -26,7 +26,8 @@ class StringService
         $output = $this->removeAccents($input);
         $output = strtolower($output);
         $output = trim($output, " \t\n\r");
-        $output= preg_replace('/\s+/', '-', $output);
+        $output = preg_replace('/\s+/', '-', $output);
+        $output = preg_replace('/-+/', '-', $output);
         $output = preg_replace('/[^a-z0-9\s\-]/', '', $output);
 
         return $output;
@@ -52,7 +53,6 @@ class StringService
 
         return strtr($input, $accents);
     }
-
 
 
 }
