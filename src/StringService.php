@@ -27,12 +27,12 @@ class StringService
             return "";
         }
 
-        $output = iconv('UTF-8', 'ASCII//TRANSLIT', $input);
+        $output = $this->removeAccents($input);
         $output = strtolower($output);
         $output = trim($output, " \t\n\r");
         $output = preg_replace('/\s+/', '-', $output);
+        $output = preg_replace('/[^a-z0-9\-]/', '-', $output);
         $output = preg_replace('/-+/', '-', $output);
-        $output = preg_replace('/[^a-z0-9\s\-]/', '', $output);
 
         return $output;
     }
@@ -69,6 +69,27 @@ class StringService
         }
 
         return $output;
+    }
+
+    function removeAccents(string $input): string
+    {
+        $accents = array(
+            'à' => 'a', 'â' => 'a', 'ä' => 'a', 'á' => 'a', 'ã' => 'a',
+            'é' => 'e', 'è' => 'e', 'ê' => 'e', 'ë' => 'e',
+            'î' => 'i', 'ï' => 'i', 'í' => 'i',
+            'ö' => 'o', 'ô' => 'o', 'ò' => 'o', 'ó' => 'o', 'õ' => 'o',
+            'ù' => 'u', 'û' => 'u', 'ü' => 'u', 'ú' => 'u',
+            'ç' => 'c', 'ñ' => 'n',
+
+            'À' => 'A', 'Â' => 'A', 'Ä' => 'A', 'Á' => 'A', 'Ã' => 'A',
+            'É' => 'E', 'È' => 'E', 'Ê' => 'E', 'Ë' => 'E',
+            'Î' => 'I', 'Ï' => 'I', 'Í' => 'I',
+            'Ö' => 'O', 'Ô' => 'O', 'Ò' => 'O', 'Ó' => 'O', 'Õ' => 'O',
+            'Ù' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ú' => 'U',
+            'Ç' => 'C', 'Ñ' => 'N'
+        );
+
+        return strtr($input, $accents);
     }
 
 }

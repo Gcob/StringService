@@ -5,24 +5,25 @@ use PHPUnit\Framework\TestCase;
 
 class StringServiceTest extends TestCase
 {
+    const chaine1 = "  Ma  -chaine##!   PÀS ENcodé     ";
+    const chaine2 = "à;À";
+    const chaine3 = " Au-delà des genres ";
+
     public function testKebab()
     {
         $stringService = StringService::getInstance();
-        $input = "  Ma  -chaine##!   PÀS ENcodé     ";
-        $expectedOutput = "ma-chaine-pas-encode";
 
-        $output = $stringService->kebabEncode($input);
-
-        $this->assertEquals($expectedOutput, $output);
+        $this->assertEquals("ma-chaine-pas-encode", $stringService->kebabEncode(self::chaine1));
+        $this->assertEquals("a-a", $stringService->kebabEncode(self::chaine2));
+        $this->assertEquals("au-dela-des-genres", $stringService->kebabEncode(self::chaine3));
     }
 
     public function testSnake()
     {
         $stringService = StringService::getInstance();
-        $input = "  Ma  -chaine##!   PÀS ENcodé     ";
         $expectedOutput = "ma_chaine_pas_encode";
 
-        $output = $stringService->snakeEncode($input);
+        $output = $stringService->snakeEncode(self::chaine1);
 
         $this->assertEquals($expectedOutput, $output);
     }
@@ -30,11 +31,11 @@ class StringServiceTest extends TestCase
     public function testCamel()
     {
         $stringService = StringService::getInstance();
-        $input = "  Ma  -chaine##!   PÀS ENcodé     ";
         $expectedOutput = "maChainePasEncode";
 
-        $output = $stringService->camelEncode($input);
+        $output = $stringService->camelEncode(self::chaine1);
 
         $this->assertEquals($expectedOutput, $output);
     }
+
 }

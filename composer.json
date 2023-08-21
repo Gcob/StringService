@@ -3,8 +3,7 @@
   "description": "Helps you with your php strings",
   "type": "library",
   "require": {
-    "php": ">=7.4",
-    "ext-iconv": "*"
+    "php": ">=7.4"
   },
   "autoload": {
     "psr-4": {
