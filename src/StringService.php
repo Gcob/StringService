@@ -21,9 +21,13 @@ class StringService
         return static::$instance;
     }
 
-    public function encodeString(string $input): string
+    public function kebabEncode(string $input): string
     {
-        $output = $this->removeAccents($input);
+        if (empty($input)) {
+            return "";
+        }
+
+        $output = iconv('UTF-8', 'ASCII//TRANSLIT', $input);
         $output = strtolower($output);
         $output = trim($output, " \t\n\r");
         $output = preg_replace('/\s+/', '-', $output);
@@ -33,26 +37,38 @@ class StringService
         return $output;
     }
 
-    function removeAccents(string $input): string
+    public function snakeEncode(string $input): string
     {
-        $accents = array(
-            'à' => 'a', 'â' => 'a', 'ä' => 'a', 'á' => 'a', 'ã' => 'a',
-            'é' => 'e', 'è' => 'e', 'ê' => 'e', 'ë' => 'e',
-            'î' => 'i', 'ï' => 'i', 'í' => 'i',
-            'ö' => 'o', 'ô' => 'o', 'ò' => 'o', 'ó' => 'o', 'õ' => 'o',
-            'ù' => 'u', 'û' => 'u', 'ü' => 'u', 'ú' => 'u',
-            'ç' => 'c', 'ñ' => 'n',
+        if (empty($input)) {
+            return "";
+        }
 
-            'À' => 'A', 'Â' => 'A', 'Ä' => 'A', 'Á' => 'A', 'Ã' => 'A',
-            'É' => 'E', 'È' => 'E', 'Ê' => 'E', 'Ë' => 'E',
-            'Î' => 'I', 'Ï' => 'I', 'Í' => 'I',
-            'Ö' => 'O', 'Ô' => 'O', 'Ò' => 'O', 'Ó' => 'O', 'Õ' => 'O',
-            'Ù' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ú' => 'U',
-            'Ç' => 'C', 'Ñ' => 'N'
-        );
+        $output = $this->kebabEncode($input);
+        $output = str_replace('-', '_', $output);
 
-        return strtr($input, $accents);
+        return $output;
     }
 
+    public function camelEncode(string $input): string
+    {
+        if (empty($input)) {
+            return "";
+        }
+
+        $tmp = $this->kebabEncode($input);
+        $tmp = explode('-', $tmp);
+
+        if (count($tmp) == 1) {
+            return $tmp[0];
+        }
+
+        $output = $tmp[0];
+
+        for ($i = 1; $i < count($tmp); $i++) {
+            $output .= ucfirst($tmp[$i]);
+        }
+
+        return $output;
+    }
 
 }
