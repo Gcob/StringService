@@ -30,10 +30,10 @@ class StringService
 
         $output = $this->removeAccents($input);
         $output = strtolower($output);
-        $output = trim($output, " \t\n\r");
-        $output = preg_replace('/\s+/', $areSpecialCharsSpaces ? "-" : "", $output);
-        $output = preg_replace('/[^a-z0-9\-]/', '-', $output);
+        $output = preg_replace('/[^a-z0-9\- ]/', $areSpecialCharsSpaces ? "-" : "", $output);
+        $output = str_replace(" ", "-", $output);
         $output = preg_replace('/-+/', '-', $output);
+        $output = trim($output, "-");
 
         return $output;
     }

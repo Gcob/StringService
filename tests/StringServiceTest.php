@@ -7,15 +7,20 @@ class StringServiceTest extends TestCase
 {
     const chaine1 = "  Ma  -chaine##!   PÀS ENcodé     ";
     const chaine2 = "à;À";
-    const chaine3 = " Au-delà des genres ";
+    const chaine3 = " Au-delà des genres!Il y a 
+    
+    des gens. ";
 
     public function testKebab()
     {
         $stringService = StringService::getInstance();
 
         $this->assertEquals("ma-chaine-pas-encode", $stringService->kebabEncode(self::chaine1));
+        $this->assertEquals("ma-chaine-pas-encode", $stringService->kebabEncode(self::chaine1, false));
         $this->assertEquals("a-a", $stringService->kebabEncode(self::chaine2));
-        $this->assertEquals("au-dela-des-genres", $stringService->kebabEncode(self::chaine3));
+        $this->assertEquals("aa", $stringService->kebabEncode(self::chaine2, false));
+        $this->assertEquals("au-dela-des-genres-il-y-a-des-gens", $stringService->kebabEncode(self::chaine3));
+        $this->assertEquals("au-dela-des-genresil-y-a-des-gens", $stringService->kebabEncode(self::chaine3, false));
     }
 
     public function testSnake()
