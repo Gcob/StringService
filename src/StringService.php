@@ -6,6 +6,7 @@ use Transliterator;
 
 class StringService
 {
+
     private static $instance;
 
     private function __construct()
@@ -21,7 +22,7 @@ class StringService
         return static::$instance;
     }
 
-    public function kebabEncode(string $input): string
+    public function kebabEncode(string $input, bool $areSpecialCharsSpaces = true): string
     {
         if (empty($input)) {
             return "";
@@ -30,32 +31,32 @@ class StringService
         $output = $this->removeAccents($input);
         $output = strtolower($output);
         $output = trim($output, " \t\n\r");
-        $output = preg_replace('/\s+/', '-', $output);
+        $output = preg_replace('/\s+/', $areSpecialCharsSpaces ? "-" : "", $output);
         $output = preg_replace('/[^a-z0-9\-]/', '-', $output);
         $output = preg_replace('/-+/', '-', $output);
 
         return $output;
     }
 
-    public function snakeEncode(string $input): string
+    public function snakeEncode(string $input, bool $areSpecialCharsSpaces = true): string
     {
         if (empty($input)) {
             return "";
         }
 
-        $output = $this->kebabEncode($input);
+        $output = $this->kebabEncode($input, $areSpecialCharsSpaces);
         $output = str_replace('-', '_', $output);
 
         return $output;
     }
 
-    public function camelEncode(string $input): string
+    public function camelEncode(string $input, bool $areSpecialCharsSpaces = true): string
     {
         if (empty($input)) {
             return "";
         }
 
-        $tmp = $this->kebabEncode($input);
+        $tmp = $this->kebabEncode($input, $areSpecialCharsSpaces);
         $tmp = explode('-', $tmp);
 
         if (count($tmp) == 1) {
