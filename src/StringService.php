@@ -9,6 +9,8 @@ class StringService
 
     private static $instance;
 
+    private ?array $accents = null;
+
     private function __construct()
     {
     }
@@ -72,25 +74,27 @@ class StringService
         return $output;
     }
 
-    function removeAccents(string $input): string
+    public function removeAccents(string $input): string
     {
-        $accents = array(
-            'à' => 'a', 'â' => 'a', 'ä' => 'a', 'á' => 'a', 'ã' => 'a',
-            'é' => 'e', 'è' => 'e', 'ê' => 'e', 'ë' => 'e',
-            'î' => 'i', 'ï' => 'i', 'í' => 'i',
-            'ö' => 'o', 'ô' => 'o', 'ò' => 'o', 'ó' => 'o', 'õ' => 'o',
-            'ù' => 'u', 'û' => 'u', 'ü' => 'u', 'ú' => 'u',
-            'ç' => 'c', 'ñ' => 'n',
+        if ($this->accents == null) {
+            $this->accents = [
+                'à' => 'a', 'â' => 'a', 'ä' => 'a', 'á' => 'a', 'ã' => 'a',
+                'é' => 'e', 'è' => 'e', 'ê' => 'e', 'ë' => 'e',
+                'î' => 'i', 'ï' => 'i', 'í' => 'i',
+                'ö' => 'o', 'ô' => 'o', 'ò' => 'o', 'ó' => 'o', 'õ' => 'o',
+                'ù' => 'u', 'û' => 'u', 'ü' => 'u', 'ú' => 'u',
+                'ç' => 'c', 'ñ' => 'n',
 
-            'À' => 'A', 'Â' => 'A', 'Ä' => 'A', 'Á' => 'A', 'Ã' => 'A',
-            'É' => 'E', 'È' => 'E', 'Ê' => 'E', 'Ë' => 'E',
-            'Î' => 'I', 'Ï' => 'I', 'Í' => 'I',
-            'Ö' => 'O', 'Ô' => 'O', 'Ò' => 'O', 'Ó' => 'O', 'Õ' => 'O',
-            'Ù' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ú' => 'U',
-            'Ç' => 'C', 'Ñ' => 'N'
-        );
+                'À' => 'A', 'Â' => 'A', 'Ä' => 'A', 'Á' => 'A', 'Ã' => 'A',
+                'É' => 'E', 'È' => 'E', 'Ê' => 'E', 'Ë' => 'E',
+                'Î' => 'I', 'Ï' => 'I', 'Í' => 'I',
+                'Ö' => 'O', 'Ô' => 'O', 'Ò' => 'O', 'Ó' => 'O', 'Õ' => 'O',
+                'Ù' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ú' => 'U',
+                'Ç' => 'C', 'Ñ' => 'N'
+            ];
+        }
 
-        return strtr($input, $accents);
+        return strtr($input, $this->accents);
     }
 
 }
