@@ -2,6 +2,7 @@
 
 namespace gcob\StringService;
 
+use DateTime;
 use Transliterator;
 
 class StringService

@@ -1,6 +1,6 @@
 {
   "name": "gcob/string_service",
-  "description": "Helps you with your php strings",
+  "description": "Helps with latin string manipulation, without adding dependencies.",
   "type": "library",
   "require": {
     "php": ">=7.4"
@@ -15,5 +15,8 @@
   },
   "require-dev": {
     "phpunit/phpunit": "^9.6"
+  },
+  "scripts": {
+    "test": "./vendor/bin/phpunit  --verbose tests"
   }
 }

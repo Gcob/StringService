@@ -1,1 +1,1 @@
-{"version":1,"defects":{"StringServiceTest::testEncodeString":3},"times":{"StringServiceTest::testEncodeString":0,"StringServiceTest::testRemoveAccent":0.001}}
+{"version":1,"defects":{"StringServiceTest::testEncodeString":3,"NiceDateTest::testDates":3},"times":{"StringServiceTest::testEncodeString":0,"StringServiceTest::testRemoveAccent":0.001,"NiceDateTest::testDates":0.001,"StringServiceTest::testKebab":0,"StringServiceTest::testSnake":0,"StringServiceTest::testCamel":0}}

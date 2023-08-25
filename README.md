@@ -1,6 +1,7 @@
 # String Service
 
-Helps with latin string manipulation.
+Helps with latin string manipulation, without adding dependencies. 
+Making code simple, intuitive and work as excepted.
 
 ### Encode
 
