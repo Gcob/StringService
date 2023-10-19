@@ -75,27 +75,16 @@ class StringService
         return $output;
     }
 
-    public function removeAccents(string $input): string
+    /**
+     * Source : https://dev.to/bdelespierre/convert-accentuated-character-to-their-ascii-equivalent-in-php-3kf1
+     */
+    public function removeAccents(string $input, string $charset = 'utf-8'): string
     {
-        if ($this->accents == null) {
-            $this->accents = [
-                'à' => 'a', 'â' => 'a', 'ä' => 'a', 'á' => 'a', 'ã' => 'a',
-                'é' => 'e', 'è' => 'e', 'ê' => 'e', 'ë' => 'e',
-                'î' => 'i', 'ï' => 'i', 'í' => 'i',
-                'ö' => 'o', 'ô' => 'o', 'ò' => 'o', 'ó' => 'o', 'õ' => 'o',
-                'ù' => 'u', 'û' => 'u', 'ü' => 'u', 'ú' => 'u',
-                'ç' => 'c', 'ñ' => 'n',
+        $input = htmlentities($input, ENT_NOQUOTES, $charset);
+        $input = preg_replace('#&([A-za-z])(?:acute|cedil|caron|circ|grave|orn|ring|slash|th|tilde|uml);#', '\1', $input);
+        $input = preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', $input);
 
-                'À' => 'A', 'Â' => 'A', 'Ä' => 'A', 'Á' => 'A', 'Ã' => 'A',
-                'É' => 'E', 'È' => 'E', 'Ê' => 'E', 'Ë' => 'E',
-                'Î' => 'I', 'Ï' => 'I', 'Í' => 'I',
-                'Ö' => 'O', 'Ô' => 'O', 'Ò' => 'O', 'Ó' => 'O', 'Õ' => 'O',
-                'Ù' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ú' => 'U',
-                'Ç' => 'C', 'Ñ' => 'N'
-            ];
-        }
-
-        return strtr($input, $this->accents);
+        return preg_replace('#&[^;]+;#', '', $input);
     }
 
 }
